@@ -2,13 +2,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Dimensions,
-  Text,
-  Navigator,
   Vibration,
-  Linking,
   Animated,
   Easing,
   View
@@ -23,8 +19,6 @@ export default class QRCodeScanner extends Component {
     reactivate: PropTypes.bool,
     reactivateTimeout: PropTypes.number,
     fadeIn: PropTypes.bool,
-    showMarker: PropTypes.bool,
-    customMarker: PropTypes.element,
     cameraStyle: PropTypes.any,
     topViewStyle: PropTypes.any,
     bottomViewStyle: PropTypes.any,
@@ -83,7 +77,6 @@ export default class QRCodeScanner extends Component {
         setTimeout(() => (this._setScanning(false)), this.props.reactivateTimeout);
       }
     }
-    return;
   }
 
   _renderTopContent() {
@@ -100,15 +93,6 @@ export default class QRCodeScanner extends Component {
     return null;
   }
 
-  _renderCameraMarker() {
-    return null;
-    return (
-      <View style={styles.rectangleContainer}>
-        <View style={styles.rectangle}/>
-      </View>
-    )
-  }
-
   _renderCamera() {
     if (this.props.fadeIn) {
       return (
@@ -117,16 +101,12 @@ export default class QRCodeScanner extends Component {
             opacity: this.state.fadeInOpacity,
             backgroundColor: 'transparent'
         }}>
-          <Camera style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
-            {this._renderCameraMarker()}
-          </Camera>
+          <Camera style={[styles.camera, this.props.cameraStyle]} onBarCodeRead={this._handleBarCodeRead.bind(this)} />
         </Animated.View>
       )
     }
     return (
-      <Camera style={styles.camera} onBarCodeRead={this._handleBarCodeRead.bind(this)}>
-        {this._renderCameraMarker()}
-      </Camera>
+      <Camera style={styles.camera} onBarCodeRead={this._handleBarCodeRead.bind(this)} />
     )
   }
 
@@ -175,7 +155,6 @@ const styles = StyleSheet.create({
   },
 
   buttonTouchable: {
-    // backgroundColor: 'pink',
     padding: 16,
   },
 
